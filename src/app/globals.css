@@ -1,34 +1,43 @@
-import React from 'react'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import dynamic from 'next/dynamic'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-// @ts-ignore
-const ThemeProvider = dynamic(() => import('@/components/ThemeProvider').then(mod => mod.default), { ssr: false }) as any
-// @ts-ignore
-const MusicPlayer = dynamic(() => import('@/components/MusicPlayer').then(mod => mod.default), { ssr: false }) as any
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'Chandler Patton',
-  description: 'A beautiful, modern website built with Next.js and Tailwind CSS',
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-black text-white transition-colors duration-300;
+  }
+  
+  .dark body {
+    @apply bg-black text-white;
+  }
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider>
-          {children}
-          <MusicPlayer src="/mount kimbie - delta.mp3" />
-        </ThemeProvider>
-      </body>
-    </html>
-  )
-}
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-light-accent to-light-secondary bg-clip-text text-transparent;
+  }
+  
+  .dark .gradient-text {
+    @apply bg-gradient-to-r from-dark-accent to-dark-secondary bg-clip-text text-transparent;
+  }
+  
+  .card {
+    @apply bg-light-surface rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl;
+  }
+  
+  .dark .card {
+    @apply bg-dark-surface;
+  }
+  
+  .btn-primary {
+    @apply bg-light-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-opacity-90 hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply bg-light-secondary text-light-text px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-opacity-90 hover:scale-105;
+  }
+} 
